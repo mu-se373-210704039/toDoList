@@ -13,11 +13,13 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TodoApp() {
-    var todoItems by remember { mutableStateOf(listOf("")) }
+    var todoItems by remember { mutableStateOf(listOf("Task1")) }
     var newItemText by remember { mutableStateOf("") }
 
     Column(
@@ -39,11 +41,12 @@ fun TodoApp() {
             .padding(16.dp)
             .fillMaxSize()
     ) {
+        Surface(color = Color.Magenta , modifier = Modifier.fillMaxWidth()){
         Text(
             text = "To-Do List",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 0.dp)
-        )
+        )}
         TextField(
             value = newItemText,
             onValueChange = { newItemText = it },
@@ -69,12 +72,13 @@ fun TodoApp() {
                 TodoItem(text = item) {
                     todoItems = todoItems.toMutableList().also {
                         it.removeAt(index)
+                        }
                     }
                 }
             }
         }
     }
-}
+
 
 @Composable
 fun TodoItem(text: String, onItemClicked: () -> Unit) {
